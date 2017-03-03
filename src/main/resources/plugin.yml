@@ -1,0 +1,25 @@
+name: Jutuskeem
+version: ${project.version}
+author: mikroskeem
+main: eu.mikroskeem.jutuskeem.Main
+description: Extremely simple chat plugin
+webpage: https://mikroskeem.eu
+depend:
+- ProvidersLib
+
+commands:
+  jutuskeem:
+    permission: jutuskeem.use
+
+permissions:
+  jutuskeem.use:
+    description: Reload plugin configuration
+    default: op
+
+  jutuskeem.chatcolors:
+    description: Allows to use colors/formatting in chat
+    default: op
+
+  jutuskeem.nickname:
+    description: Allows to manage your nickname
+    default: op

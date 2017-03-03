@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>eu.mikroskeem</groupId>
+    <artifactId>jutuskeem</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+
+    <properties>
+        <minecraft.version>1.11.2-R0.1-SNAPSHOT</minecraft.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>destroystokyo-repo</id>
+            <url>https://repo.destroystokyo.com/repository/maven-public//</url>
+        </repository>
+        <repository>
+            <id>mikroskeem-repo</id>
+            <name>mikroskeem Maven Repository</name>
+            <url>https://repo.wut.ee/repository/mikroskeem-repo/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+    <build>
+        <plugins>
+            <!-- Compiler -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.5.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <defaultGoal>clean compile package</defaultGoal>
+    </build>
+    <dependencies>
+        <!-- Platform -->
+        <dependency>
+            <groupId>com.destroystokyo.paper</groupId>
+            <artifactId>paper-api</artifactId>
+            <version>${minecraft.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- ProvidersLib API -->
+        <dependency>
+            <groupId>eu.mikroskeem.providerslib</groupId>
+            <artifactId>api</artifactId>
+            <version>0.0.5-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.10</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+</project>

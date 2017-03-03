@@ -1,0 +1,8 @@
+# Supported placeholders:
+#   %player_name% - Player ingame name
+#   %player_displayname% - Player nickname (a'la /nick)
+#   %message% - Player message (use jutuskeem.chatcolors to get formatting)
+#   %player_prefix% - Player prefix (from permissions plugin usually)
+#   %player_suffix% - Player suffix (from permissions plugin usually)
+
+chat-format: "%player_prefix%&f %player_displayname%&f:%player_suffix% %message%"
