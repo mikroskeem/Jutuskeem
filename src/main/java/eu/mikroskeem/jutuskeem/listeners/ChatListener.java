@@ -13,6 +13,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import static eu.mikroskeem.jutuskeem.Utils.c;
@@ -24,9 +25,8 @@ public class ChatListener implements Listener {
 
     @EventHandler
     public void on(AsyncPlayerChatEvent event){
-        event.setCancelled(true);
         Player player = event.getPlayer();
-        Set<Player> recipients = event.getRecipients();
+        Set<Player> recipients = clearRecipients(event);
         String message = event.getMessage();
         String format = plugin.getConfig().getString("chat-format", "<%player_name%> %message%");
         String finalRawMessage = Utils.replaceParams(new HashMap<String, String>(){{
@@ -42,5 +42,17 @@ public class ChatListener implements Listener {
             finalMessage.addExtra(component);
         }
         recipients.forEach(p -> p.sendMessage(finalMessage));
+    }
+
+    private Set<Player> clearRecipients(AsyncPlayerChatEvent event){
+        /* Try to clean, and if it fails, cancel event */
+        try {
+            Set<Player> recipients = new LinkedHashSet<>(event.getRecipients());
+            event.getRecipients().clear();
+            return recipients;
+        } catch (UnsupportedOperationException e){
+            event.setCancelled(true);
+            return event.getRecipients();
+        }
     }
 }
