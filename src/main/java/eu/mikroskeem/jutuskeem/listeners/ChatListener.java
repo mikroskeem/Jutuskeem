@@ -23,7 +23,7 @@ public class ChatListener implements Listener {
     @Inject private Permissions permissions;
     @Inject private Chat chat;
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void on(AsyncPlayerChatEvent event){
         Player player = event.getPlayer();
         Set<Player> recipients = clearRecipients(event);
