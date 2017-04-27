@@ -17,8 +17,8 @@ import java.util.LinkedHashSet
  * @author Mark Vainomaa
  */
 class ChatListener(private val plugin : Main) : Listener {
-    @Inject private val permissions: Permissions? = null
-    @Inject private val chat: Chat? = null
+    @Inject private lateinit var permissions: Permissions
+    @Inject private lateinit var chat: Chat
 
     @EventHandler(ignoreCancelled = true)
     fun on(e: AsyncPlayerChatEvent) {
@@ -26,8 +26,8 @@ class ChatListener(private val plugin : Main) : Listener {
         val params = mapOf(
             Pair("player_name", e.player.name),
             Pair("player_displayname", c(e.player.displayName)),
-            Pair("message", if(permissions!!.playerHas(e.player, "jutuskeem.chatcolors")) c(e.message) else e.message),
-            Pair("player_prefix", c(chat!!.getPrefix(e.player)?:"")),
+            Pair("message", if(permissions.playerHas(e.player, "jutuskeem.chatcolors")) c(e.message) else e.message),
+            Pair("player_prefix", c(chat.getPrefix(e.player)?:"")),
             Pair("player_suffix", c(chat.getSuffix(e.player)?:""))
         )
         val finalRawMessage = Utils.replaceParams(params, c(format))
