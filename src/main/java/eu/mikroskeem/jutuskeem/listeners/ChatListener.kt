@@ -27,8 +27,8 @@ class ChatListener(private val plugin : Main) : Listener {
             Pair("player_name", e.player.name),
             Pair("player_displayname", c(e.player.displayName)),
             Pair("message", if(permissions!!.playerHas(e.player, "jutuskeem.chatcolors")) c(e.message) else e.message),
-            Pair("player_prefix", c(chat!!.getPrefix(e.player))),
-            Pair("player_suffix", c(chat.getSuffix(e.player)))
+            Pair("player_prefix", c(chat!!.getPrefix(e.player)?:"")),
+            Pair("player_suffix", c(chat.getSuffix(e.player)?:""))
         )
         val finalRawMessage = Utils.replaceParams(params, c(format))
         val components = TextComponent.fromLegacyText(finalRawMessage)
