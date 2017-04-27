@@ -33,6 +33,8 @@ class Main : JavaPlugin() {
 
         /* Register commands and listeners */
         getCommand("jutuskeem").executor = MainCommand(this)
-        server.pluginManager.registerEvents(injector.getInstance<ChatListener>(ChatListener::class.java), this)
+        val chatListener = ChatListener(this)
+        injector.injectMembers(chatListener)
+        server.pluginManager.registerEvents(chatListener, this)
     }
 }
