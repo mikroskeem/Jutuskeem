@@ -24,7 +24,7 @@ class PlayerListener constructor() : Listener {
         }
         if(permissions.playerHas(e.player, PermissionNodes.NICKNAME.node)) {
             val nickname = main.nicknameManager.getNickname(e.player)
-            if(nickname?.isNotEmpty()!!) {
+            if(nickname != null && nickname.isNotEmpty()) {
                 e.player.displayName = nickname
             }
         }
