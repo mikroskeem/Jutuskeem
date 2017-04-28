@@ -1,8 +1,28 @@
-# Supported placeholders:
-#   %player_name% - Player ingame name
-#   %player_displayname% - Player nickname (a'la /nick)
-#   %message% - Player message (use jutuskeem.chatcolors to get formatting)
-#   %player_prefix% - Player prefix (from permissions plugin usually)
-#   %player_suffix% - Player suffix (from permissions plugin usually)
+# Jutuskeem configuration
+#
+# Chat formats:
+#   Supported placeholders in chat format:
+#     %player_name% - Player ingame name
+#     %player_displayname% - Player nickname (a'la /nick)
+#     %message% - Player message (use jutuskeem.chatcolors to get formatting)
+#     %player_prefix% - Player prefix (from permissions plugin usually)
+#     %player_suffix% - Player suffix (from permissions plugin usually)
+#
+#   Supported placeholders in private message and socialspy format:
+#     %sender_name% / %receiver_name%
+#     %sender_displayname% / %receiver_displayname%
+#     %sender_prefix% / %receiver_prefix%
+#     %sender_suffix% / %receiver_suffix%
+#     %message%
+#
+# Nickname configuration:
+#   Limit configuration applies only to readable characters. Color codes aren't accounted
 
-chat-format: "%player_prefix%&f %player_displayname%&f:%player_suffix% %message%"
+format:
+  chat: "%player_prefix%&f %player_displayname%&f:%player_suffix% %message%"
+  privatemessage-send-to-player: "&eyou &7-> &a%receiver_name%&7: &f%message%"
+  privatemessage-receive-from-player: "&c%sender_name% &7-> &eyou&7: &f%message%"
+  socialspy: "&7[&4MSG&7]&8 %sender_name% &7-> &f%receiver_name%&7: &f%message%"
+
+nickname:
+  length-limit: 16

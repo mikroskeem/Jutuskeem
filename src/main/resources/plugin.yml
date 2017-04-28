@@ -11,6 +11,18 @@ commands:
   jutuskeem:
     permission: jutuskeem.use
 
+  nickname:
+    permission: jutuskeem.nickname
+    aliases: [nick, clearnickname, clearnick]
+
+  tell:
+    permission: jutuskeem.tell
+    aliases: [msg, reply, t, m, r]
+
+  socialspy:
+    permission: jutuskeem.socialspy
+    aliases: [ss]
+
 permissions:
   jutuskeem.use:
     description: Reload plugin configuration
@@ -22,4 +34,16 @@ permissions:
 
   jutuskeem.nickname:
     description: Allows to manage your nickname
+    default: op
+
+  jutuskeem.nickname.clearothers:
+    description: Allows to clear other players nicknames
+    default: op
+
+  jutuskeem.tell:
+    description: Allows to send private messages to players
+    default: true
+
+  jutuskeem.socialspy:
+    description: Allows to see other players private messages
     default: op

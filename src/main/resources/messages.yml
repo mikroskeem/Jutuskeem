@@ -1,0 +1,15 @@
+configuration-reloaded: "&7Configuration reloaded!"
+no-permission: "&cNot enough permissions!"
+invalid-command-usage: "&cInvalid usage! Correct usage is: &7%usage%"
+no-such-player: "&cNo such player: &l%player%&c!"
+
+nobody-to-reply-to: "&cYou have nobody to reply to!"
+cannot-message-yourself: "&cYou cannot message yourself!"
+
+your-nickname-set-to: "&7Your nickname is now: &r%nickname%"
+player-nickname-set-to: "&7Player &c%player% &7nickname is now: &r%nickname%"
+nickname-cleared: "&7Player &c&l%player% &7nickname cleared"
+nickname-too-long: "&cNickname is too long, it must be shorter than &l%max%&c!"
+
+socialspy-enabled: "&7Socialspy &aenabled &7for player &c%player%"
+socialspy-disabled: "&7Socialspy &cdisabled &7for player &c%player%"
