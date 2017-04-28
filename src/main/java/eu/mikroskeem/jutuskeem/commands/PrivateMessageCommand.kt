@@ -52,6 +52,7 @@ class PrivateMessageCommand : CommandExecutor {
                             return true
                         }
                         plugin.lastRepliedTo.compute(sender, { _, _ ->
+                            plugin.lastRepliedTo.computeIfAbsent(receiver, { _ -> sender })
                             sendMsg(sender, receiver, args.sliceArray(1..(args.size-1)).joinToString(" "))
                             receiver
                         })
