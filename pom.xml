@@ -11,7 +11,7 @@
     <properties>
         <minecraft.version>1.11.2-R0.1-SNAPSHOT</minecraft.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <kotlin.version>1.1.2</kotlin.version>
+        <kotlin.version>1.1.2-5</kotlin.version>
     </properties>
 
     <profiles>
