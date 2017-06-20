@@ -34,6 +34,10 @@ class PrivateMessageCommand : CommandExecutor {
                 if (args.isNotEmpty()) {
                     if(plugin.lastRepliedTo.containsKey(sender)) {
                         plugin.lastRepliedTo.computeIfPresent(sender, { _, receiver ->
+                            if(!receiver.isOnline) {
+                                plugin.messages.sendMessage(sender, "nobody-to-reply-to", null)
+                                return@computeIfPresent null
+                            }
                             sendMsg(sender, receiver, args.joinToString(" "))
                             receiver
                         })
