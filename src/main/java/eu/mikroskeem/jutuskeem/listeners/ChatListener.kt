@@ -10,6 +10,7 @@ import eu.mikroskeem.providerslib.api.Permissions
 import net.md_5.bungee.api.chat.TextComponent
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
+import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.player.AsyncPlayerChatEvent
 import java.util.LinkedHashSet
@@ -22,7 +23,7 @@ class ChatListener constructor() : Listener {
     @Inject private lateinit var permissions: Permissions
     @Inject private lateinit var chat: Chat
 
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     fun on(e: AsyncPlayerChatEvent) {
         val format = plugin.config.getString("format.chat", "<%player_name%> %message%")
         val params = mapOf(
