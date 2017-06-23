@@ -1,5 +1,5 @@
 name: Jutuskeem
-version: ${project.version}
+version: @version@
 author: mikroskeem
 main: eu.mikroskeem.jutuskeem.Main
 description: Extremely simple chat plugin
