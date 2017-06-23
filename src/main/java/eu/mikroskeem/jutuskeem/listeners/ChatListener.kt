@@ -1,37 +1,30 @@
 package eu.mikroskeem.jutuskeem.listeners
 
-import com.google.inject.Inject
 import eu.mikroskeem.jutuskeem.Main
 import eu.mikroskeem.jutuskeem.PermissionNodes
-import eu.mikroskeem.jutuskeem.Utils
 import eu.mikroskeem.jutuskeem.Utils.c
-import eu.mikroskeem.providerslib.api.Chat
-import eu.mikroskeem.providerslib.api.Permissions
-import net.md_5.bungee.api.chat.TextComponent
+import eu.mikroskeem.jutuskeem.configuration.ConfigurationPath
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.player.AsyncPlayerChatEvent
-import java.util.LinkedHashSet
+import java.util.*
 
 /**
  * @author Mark Vainomaa
  */
-class ChatListener constructor() : Listener {
-    @Inject private lateinit var plugin : Main
-    @Inject private lateinit var permissions: Permissions
-    @Inject private lateinit var chat: Chat
-
+class ChatListener(private val plugin: Main) : Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     fun on(e: AsyncPlayerChatEvent) {
-        val format = plugin.config.getString("format.chat", "<%player_name%> %message%")
+        val format = plugin.config.getString(ConfigurationPath.F_CHAT)
+        //getPlaceholders(format)
         val params = mapOf(
             Pair("player_name", e.player.name),
             Pair("player_displayname", c(e.player.displayName)),
-            Pair("message", if(permissions.playerHas(e.player, PermissionNodes.COLORS.node)) c(e.message) else e.message),
-            Pair("player_prefix", c(chat.getPrefix(e.player)?:"")),
-            Pair("player_suffix", c(chat.getSuffix(e.player)?:""))
+            Pair("message", if(e.player.hasPermission(PermissionNodes.COLORS.node)) c(e.message) else e.message),
+            Pair("player_prefix", e.player.getPrefix()),
+            Pair("player_suffix", e.player.getSuffix())
         )
         val message = c(format, params)
         clearRecipients(e).forEach { it.sendMessage(message) }
@@ -48,4 +41,7 @@ class ChatListener constructor() : Listener {
             return event.recipients
         }
     }
+
+    private fun Player.getPrefix(): String = c(plugin.vaultHook.getPrefix(player)?: "")
+    private fun Player.getSuffix(): String = c(plugin.vaultHook.getSuffix(player)?: "")
 }

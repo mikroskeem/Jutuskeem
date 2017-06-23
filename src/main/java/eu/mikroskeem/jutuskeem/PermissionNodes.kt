@@ -9,5 +9,8 @@ enum class PermissionNodes(val node: String) {
     NICKNAME("jutuskeem.nickname"),
     CLEARNICKNAME("jutuskeem.nickname.clearothers"),
     TELL("jutuskeem.tell"),
-    SOCIALSPY("jutuskeem.socialspy");
+    SOCIALSPY("jutuskeem.socialspy"),
+    IGNORE("jutuskeem.ignore"),
+    IGNORE_EXEMPT("jutuskeem.ignore.exempt"),
+    ALLOW_GLOBAL_TOGGLE("jutuskeem.allowglobal");
 }

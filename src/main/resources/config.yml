@@ -15,8 +15,25 @@
 #     %sender_suffix% / %receiver_suffix%
 #     %message%
 #
+# Private message configuration:
+#   Whether to reply to last sender instead of first
+#     Example:
+#       mikroskeem -> Narkokoer: Hey (/msg)
+#       mikroskeem <- Narkokoer: Hey (/r)
+#       mikroskeem -> Narkokoer: What's up? (/r)
+#       mikroskeem <- DirolGaming: Hi (/msg)
+#       mikroskeem -> Narkokoer: I heard you found few diamonds (/r)
+#     So turning this on would mean I'd always reply to player who I first started messaging with,
+#     not with last one who messaged me. Of course reply changes if I message to another player.
+#     This option is kept off by default to avoid causing confusion to players.
+#
 # Nickname configuration:
-#   Limit configuration applies only to readable characters. Color codes aren't accounted
+#   Limit configuration applies only to readable characters.
+#   Whether to count colors in limit or not
+#
+# Worlds configuration:
+#   Per world chat enabled or not
+#   World groups (worlds under that group have merged chats)
 
 format:
   chat: "%player_prefix%&f %player_displayname%&f:%player_suffix% %message%"
@@ -24,5 +41,17 @@ format:
   privatemessage-receive-from-player: "&c%sender_name% &7-> &eyou&7: &f%message%"
   socialspy: "&7[&4MSG&7]&8 %sender_name% &7-> &f%receiver_name%&7: &f%message%"
 
+private-messages:
+  reply-to-first-sender-not-last: false
+
 nickname:
   length-limit: 16
+  count-colors-in-limit: false
+
+worlds:
+  per-world-enabled: false
+  world-groups:
+    world_group_1:
+    - world
+    - world_nether
+    - world_the_end

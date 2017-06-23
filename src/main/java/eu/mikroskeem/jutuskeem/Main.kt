@@ -1,16 +1,15 @@
 package eu.mikroskeem.jutuskeem
 
-import com.google.inject.Injector
-import com.google.inject.Module
 import eu.mikroskeem.jutuskeem.commands.MainCommand
 import eu.mikroskeem.jutuskeem.commands.NicknameCommand
 import eu.mikroskeem.jutuskeem.commands.PrivateMessageCommand
 import eu.mikroskeem.jutuskeem.commands.SocialspyCommand
+import eu.mikroskeem.jutuskeem.configuration.ConfigurationWrapper
+import eu.mikroskeem.jutuskeem.configuration.MessagesLoader
+import eu.mikroskeem.jutuskeem.hooks.VaultHook
 import eu.mikroskeem.jutuskeem.listeners.ChatListener
 import eu.mikroskeem.jutuskeem.listeners.PlayerListener
-import eu.mikroskeem.providerslib.api.Providers
 import org.bukkit.entity.Player
-import org.bukkit.plugin.RegisteredServiceProvider
 import org.bukkit.plugin.java.JavaPlugin
 
 /**
@@ -21,37 +20,29 @@ class Main : JavaPlugin() {
     val socialSpyEnabled = HashSet<Player>()
     lateinit var messages : MessagesLoader
     lateinit var nicknameManager : NicknameManager
+    lateinit var config: ConfigurationWrapper
+    lateinit var vaultHook: VaultHook.VaultWrapper
 
     override fun onEnable() {
-        /* Set plugin up */
-        val injector : Injector
-        try {
-            injector = checkNotNull<RegisteredServiceProvider<Providers>>(
-                    server.servicesManager.getRegistration(Providers::class.java))
-                    .provider
-                    .injector
-                    .createChildInjector(Module { binder -> binder.bind(Main::class.java).toInstance(this) })
-        } catch (e: NullPointerException) {
-            logger.severe(e.message)
-            isEnabled = false
-            return
-        }
-
         /* Load and copy messages */
+        config = ConfigurationWrapper(this)
         saveDefaultConfig()
-        config.options().copyDefaults(true)
+        getConfig().options().copyDefaults(true)
         saveConfig()
 
+        /* Set up Vault Hook */
+        vaultHook = VaultHook().vaultHook
+
         /* Set up nickname manager and messages */
-        nicknameManager = injector.getInstance(NicknameManager::class.java)
-        messages = injector.getInstance(MessagesLoader::class.java)
+        nicknameManager = NicknameManager(this)
+        messages = MessagesLoader(this)
 
         /* Register commands and listeners */
-        getCommand("jutuskeem").executor = injector.getInstance(MainCommand::class.java)
-        getCommand("nickname").executor = injector.getInstance(NicknameCommand::class.java)
-        getCommand("socialspy").executor = injector.getInstance(SocialspyCommand::class.java)
-        getCommand("tell").executor = injector.getInstance(PrivateMessageCommand::class.java)
-        server.pluginManager.registerEvents(injector.getInstance(ChatListener::class.java), this)
-        server.pluginManager.registerEvents(injector.getInstance(PlayerListener::class.java), this)
+        getCommand("jutuskeem").executor = MainCommand(this)
+        getCommand("nickname").executor = NicknameCommand(this)
+        getCommand("socialspy").executor = SocialspyCommand(this)
+        getCommand("tell").executor = PrivateMessageCommand(this)
+        server.pluginManager.registerEvents(ChatListener(this), this)
+        server.pluginManager.registerEvents(PlayerListener(this), this)
     }
 }

@@ -4,8 +4,8 @@ author: mikroskeem
 main: eu.mikroskeem.jutuskeem.Main
 description: Extremely simple chat plugin
 webpage: https://mikroskeem.eu
-depend:
-- ProvidersLib
+softdepend:
+- Vault
 
 commands:
   jutuskeem:
@@ -22,6 +22,9 @@ commands:
   socialspy:
     permission: jutuskeem.socialspy
     aliases: [ss]
+
+#  ignore:
+#    permission: jutuskeem.ignore
 
 permissions:
   jutuskeem.use:
@@ -47,3 +50,15 @@ permissions:
   jutuskeem.socialspy:
     description: Allows to see other players private messages
     default: op
+
+#  jutuskeem.ignore:
+#    description: Allows to ignore other players
+#    default: true
+#
+#  jutuskeem.ignore.exempt:
+#    description: Allows ignoring players to see ignored player messages despite their setting
+#    default: op
+#
+#  jutuskeem.allowglobal:
+#    description: Allows talking globally over worlds (toggleable)
+#    default: op

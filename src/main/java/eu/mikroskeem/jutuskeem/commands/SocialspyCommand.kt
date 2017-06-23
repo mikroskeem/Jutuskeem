@@ -1,6 +1,5 @@
 package eu.mikroskeem.jutuskeem.commands
 
-import com.google.inject.Inject
 import eu.mikroskeem.jutuskeem.Main
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -10,9 +9,7 @@ import org.bukkit.entity.Player
 /**
  * @author Mark Vainomaa
  */
-class SocialspyCommand : CommandExecutor {
-    @Inject private lateinit var plugin : Main
-
+class SocialspyCommand(private val plugin: Main) : CommandExecutor {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<String>): Boolean {
         if(sender !is Player) {
             sender.sendMessage("This is in-game command.")

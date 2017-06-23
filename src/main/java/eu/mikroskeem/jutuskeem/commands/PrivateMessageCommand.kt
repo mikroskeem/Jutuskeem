@@ -1,12 +1,10 @@
 package eu.mikroskeem.jutuskeem.commands
 
-import com.google.inject.Inject
 import eu.mikroskeem.jutuskeem.Main
 import eu.mikroskeem.jutuskeem.PermissionNodes
 import eu.mikroskeem.jutuskeem.Utils.c
 import eu.mikroskeem.jutuskeem.Utils.p
-import eu.mikroskeem.providerslib.api.Chat
-import eu.mikroskeem.providerslib.api.Permissions
+import eu.mikroskeem.jutuskeem.configuration.ConfigurationPath
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -15,15 +13,7 @@ import org.bukkit.entity.Player
 /**
  * @author Mark Vainomaa
  */
-class PrivateMessageCommand : CommandExecutor {
-    @Inject private lateinit var plugin : Main
-    @Inject private lateinit var permissions : Permissions
-    @Inject private lateinit var chat : Chat
-
-    val defaultToPlayerFormat = "&eyou &7-> &a%receiver_name%&7: &f%message%"
-    val defaultFromPlayerFormat = "&c%sender_name% &7-> &eyou&7: &f%message%"
-    val defaultSocialSpyFormat = "&7[&4MSG&7]&f %sender_name% &7-> %receiver_name%&7: &f%message%"
-
+class PrivateMessageCommand(private val plugin : Main) : CommandExecutor {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<String>): Boolean {
         if(sender !is Player) {
             sender.sendMessage("Sending message as console is not implemented yet. Use '/minecraft:tell'")
@@ -56,7 +46,11 @@ class PrivateMessageCommand : CommandExecutor {
                             return true
                         }
                         plugin.lastRepliedTo.compute(sender, { _, _ ->
-                            plugin.lastRepliedTo.computeIfAbsent(receiver, { _ -> sender })
+                            if(plugin.config.getBool(ConfigurationPath.PM_REPLY_TO_FIRST)) {
+                                plugin.lastRepliedTo.computeIfAbsent(receiver, { _ -> sender })
+                            } else {
+                                plugin.lastRepliedTo.compute(receiver, { _, _ -> sender })
+                            }
                             sendMsg(sender, receiver, args.sliceArray(1..(args.size-1)).joinToString(" "))
                             receiver
                         })
@@ -80,15 +74,15 @@ class PrivateMessageCommand : CommandExecutor {
                 Pair("receiver_name", receiver.name),
                 Pair("sender_displayname", c(sender.name)),
                 Pair("receiver_displayname", c(receiver.name)),
-                Pair("sender_prefix", c(chat.getPrefix(sender) ?: "")),
-                Pair("receiver_prefix", c(chat.getPrefix(receiver) ?: "")),
-                Pair("sender_suffix", c(chat.getSuffix(sender) ?: "")),
-                Pair("receiver_suffix", c(chat.getSuffix(receiver) ?: "")),
-                Pair("message", if (permissions.playerHas(sender, PermissionNodes.COLORS.node)) c(message) else message)
+                Pair("sender_prefix", sender.getPrefix()),
+                Pair("receiver_prefix", receiver.getPrefix()),
+                Pair("sender_suffix", sender.getSuffix()),
+                Pair("receiver_suffix", receiver.getSuffix()),
+                Pair("message", if(sender.hasPermission(PermissionNodes.COLORS.node)) c(message) else message)
         )
-        val senderFormat = plugin.config.getString("format.privatemessage-send-to-player", defaultToPlayerFormat)
-        val receiverFormat = plugin.config.getString("format.privatemessage-receive-from-player", defaultFromPlayerFormat)
-        val ssFormat = plugin.config.getString("format.socialspy", defaultSocialSpyFormat)
+        val senderFormat = plugin.config.getString(ConfigurationPath.F_PM_SEND_TO_PLAYER)
+        val receiverFormat = plugin.config.getString(ConfigurationPath.F_PM_RECEIVE_FROM_PLAYER)
+        val ssFormat = plugin.config.getString(ConfigurationPath.F_SOCIALSPY)
         val ssMessage = c(ssFormat, params)
         plugin.socialSpyEnabled.forEach {
             if(it == sender || it == receiver) return@forEach
@@ -97,4 +91,7 @@ class PrivateMessageCommand : CommandExecutor {
         sender.sendMessage(c(senderFormat, params))
         receiver.sendMessage(c(receiverFormat, params))
     }
+
+    private fun Player.getPrefix(): String = c(plugin.vaultHook.getPrefix(player)?: "")
+    private fun Player.getSuffix(): String = c(plugin.vaultHook.getSuffix(player)?: "")
 }

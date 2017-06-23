@@ -1,6 +1,5 @@
 package eu.mikroskeem.jutuskeem
 
-import com.google.inject.Inject
 import org.bukkit.entity.Player
 import java.nio.file.Files
 import java.nio.file.Path
@@ -11,7 +10,7 @@ import java.nio.file.Paths
  *
  * @author Mark Vainomaa
  */
-class NicknameManager @Inject constructor(plugin: Main) {
+class NicknameManager(plugin: Main) {
     private val nicknamesPath : Path = Paths.get(plugin.dataFolder.absolutePath, "nicknames")
 
     fun getNickname(p: Player) : String? {

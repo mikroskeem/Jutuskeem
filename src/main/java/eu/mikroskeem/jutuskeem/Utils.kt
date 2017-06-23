@@ -17,8 +17,8 @@ object Utils {
         ) { s, _ -> s }
     }
 
-    fun c(c: String): String {
-        return ChatColor.translateAlternateColorCodes('&', "" + c)
+    fun c(c: String?): String {
+        return ChatColor.translateAlternateColorCodes('&', c?:"")
     }
 
     fun c(c: String, p: Map<String, String>): BaseComponent {

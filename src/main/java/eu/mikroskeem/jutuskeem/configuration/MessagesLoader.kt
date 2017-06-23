@@ -1,6 +1,6 @@
-package eu.mikroskeem.jutuskeem
+package eu.mikroskeem.jutuskeem.configuration
 
-import com.google.inject.Inject
+import eu.mikroskeem.jutuskeem.Main
 import eu.mikroskeem.jutuskeem.Utils.c
 import org.bukkit.command.CommandSender
 import org.bukkit.configuration.file.YamlConfiguration
@@ -11,7 +11,7 @@ import java.nio.file.Paths
 /**
  * @author Mark Vainomaa
  */
-class MessagesLoader @Inject constructor(private var plugin: Main) {
+class MessagesLoader(private var plugin: Main) {
     private val messagesPath : Path = Paths.get(plugin.dataFolder.absolutePath, "messages.yml")
     private val yamlConfiguration = YamlConfiguration()
 
