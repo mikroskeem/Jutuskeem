@@ -60,6 +60,13 @@ compileKotlin {
     }
 }
 
+shadowJar {
+    relocate 'eu.mikroskeem.shuriken.reflect', 'eu.mikroskeem.jutuskeem.deps.shuriken.reflect'
+    relocate 'org.jetbrains.annotations', 'eu.mikroskeem.jutuskeem.deps.annotations'
+    relocate 'org.intellij.lang.annotations', 'eu.mikroskeem.jutuskeem.deps.annotations2'
+    relocate 'kotlin', 'eu.mikroskeem.jutuskeem.deps.kotlin'
+}
+
 license {
     header = rootProject.file('etc/HEADER')
     ignoreFailures = false
