@@ -26,7 +26,7 @@
 package eu.mikroskeem.jutuskeem.hooks
 
 import eu.mikroskeem.shuriken.reflect.Reflect
-import eu.mikroskeem.shuriken.reflect.wrappers.ClassWrapper
+import eu.mikroskeem.shuriken.reflect.ClassWrapper
 import eu.mikroskeem.shuriken.reflect.wrappers.TypeWrapper
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
