@@ -32,6 +32,7 @@ enum class PermissionNodes(val node: String) {
     RELOAD("jutuskeem.use"),
     COLORS("jutuskeem.chatcolors"),
     NICKNAME("jutuskeem.nickname"),
+    NICKNAME_OTHERS("jutuskeem.nickname.others"),
     CLEARNICKNAME("jutuskeem.nickname.clearothers"),
     TELL("jutuskeem.tell"),
     SOCIALSPY("jutuskeem.socialspy"),

@@ -39,6 +39,10 @@ permissions:
     description: Allows to manage your nickname
     default: op
 
+  jutuskeem.nickname.others:
+    description: Allows to manage others nickname
+    default: op
+
   jutuskeem.nickname.clearothers:
     description: Allows to clear other players nicknames
     default: op

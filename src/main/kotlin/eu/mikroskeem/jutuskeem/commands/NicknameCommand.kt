@@ -91,6 +91,11 @@ class NicknameCommand(private val plugin: Main) : CommandExecutor {
                     plugin.nicknameManager.setNickname(sender, nickname)
                     plugin.messages.sendMessage(sender, "your-nickname-set-to", mapOf(Pair("nickname", nickname)))
                 } else if(args.size == 2) {
+                    if(sender is Player && !sender.hasPermission(PermissionNodes.NICKNAME_OTHERS.node)) {
+                        plugin.messages.sendMessage(sender, "no-permission", null)
+                        return true
+                    }
+
                     val player = p(args[0])
                     val nickname = c(args[1])
 
